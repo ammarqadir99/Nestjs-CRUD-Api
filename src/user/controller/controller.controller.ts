@@ -22,18 +22,21 @@ export class ControllerController {
   }
 
   @Get(':id')
-  getUserByid(@Param('id') id: string): Promise<UserEntity> {
-    return this.usersService.findById(Number(id));
+  getUserByid(@Param('id') id: number): Promise<UserEntity> {
+    return this.usersService.findById(id);
   }
 
   @Post()
-  createUser(@Body() name: CreateUserDto): Promise<UserEntity> {
-    return this.usersService.createUser(name.name);
+  createUser(@Body() user: CreateUserDto): Promise<UserEntity> {
+    return this.usersService.createUser(user.name);
   }
 
-  @Put()
-  updateuser(@Body() id = Number): Promise<UserEntity> {
-    return this.usersService.updateuser(Number(id), UserEntity.name);
+  @Put(':id')
+  updateuser(
+    @Param('id') id: number,
+    @Body() user: CreateUserDto,
+  ): Promise<UserEntity> {
+    return this.usersService.updateuser(id, user.name);
   }
 
   @Delete(':id')
